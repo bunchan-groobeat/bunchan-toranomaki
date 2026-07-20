@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<!-- 社長専用の非公開教材。検索インデックス不要 -->
+<meta name="robots" content="noindex, nofollow" />
+<meta name="referrer" content="no-referrer" />
+<title>ぶんちゃんの虎の巻</title>
+<style>
+  :root {
+    --bg: #121212;        /* ベース：黒 */
+    --bg2: #1b1b1b;
+    --card: #ffffff;      /* カード：白 */
+    --ink: #1a1a1a;       /* カード内文字 */
+    --ink-soft: #5c5c5c;
+    --on-dark: #eaeaea;   /* 黒地の文字 */
+    --on-dark-soft: #9a9a9a;
+    --red: #c0392b;       /* アクセント：朱のみ */
+    --red-deep: #9c2f22;
+    --line: #e6e6e6;
+    --line-dark: #2c2c2c;
+    --tap: 52px;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, system-ui, sans-serif;
+    background: var(--bg); color: var(--on-dark); line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; min-height: 100dvh;
+    padding: max(env(safe-area-inset-top), 14px) 16px calc(env(safe-area-inset-bottom) + 24px); }
+
+  /* ===== 鍵ゲート ===== */
+  .gate { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; text-align: center; padding: 24px; }
+  .gate__mark { font-weight: 900; font-size: 26px; letter-spacing: .04em; }
+  .gate__mark em { font-style: normal; color: var(--red); }
+  .gate__lead { color: var(--on-dark-soft); font-size: 14px; max-width: 30ch; }
+  .gate__form { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px; }
+  .gate__input {
+    width: 100%; font: inherit; font-size: 16px; text-align: center; letter-spacing: .06em;
+    background: var(--bg2); color: var(--on-dark); border: 1.5px solid var(--line-dark);
+    border-radius: 10px; padding: 14px 16px; min-height: var(--tap);
+  }
+  .gate__input:focus { outline: none; border-color: var(--red); }
+  .gate__btn {
+    width: 100%; min-height: var(--tap); border: none; border-radius: 10px; cursor: pointer;
+    font: inherit; font-weight: 800; font-size: 16px; background: var(--red); color: #fff;
+  }
+  .gate__btn:active { transform: translateY(1px); }
+  .gate__err { color: #ff8a80; font-size: 13px; font-weight: 700; min-height: 18px; }
+  .gate__note { color: var(--on-dark-soft); font-size: 11.5px; max-width: 34ch; line-height: 1.7; }
+
+  /* ===== 本体 ===== */
+  .head { display: flex; align-items: baseline; gap: 10px; padding: 6px 2px 14px; border-bottom: 1px solid var(--line-dark); }
+  .head__mark { font-weight: 900; font-size: 20px; letter-spacing: .03em; }
+  .head__mark em { font-style: normal; color: var(--red); }
+  .head__sub { color: var(--on-dark-soft); font-size: 12px; }
+  .nav { display: flex; gap: 8px; overflow-x: auto; padding: 14px 0 4px; -webkit-overflow-scrolling: touch; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav__btn {
+    flex: 0 0 auto; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+    background: var(--bg2); color: var(--on-dark-soft); border: 1px solid var(--line-dark);
+    border-radius: 999px; padding: 8px 15px; min-height: 40px; white-space: nowrap;
+  }
+  .nav__btn[aria-current="true"] { background: var(--red); color: #fff; border-color: var(--red); }
+  .section__lead { color: var(--on-dark-soft); font-size: 13px; padding: 16px 2px 8px; }
+
+  /* カード */
+  .cards { display: grid; gap: 14px; padding: 8px 0 8px; }
+  .card { background: var(--card); color: var(--ink); border-radius: var(--radius); padding: 18px 18px; border: 1px solid var(--line); }
+  .card__meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+  .card__date { color: var(--ink-soft); font-size: 12px; font-weight: 700; }
+  .card__tag { font-size: 11px; font-weight: 800; color: var(--red-deep); border: 1px solid #eec7c2; background: #fbecea; border-radius: 999px; padding: 2px 9px; }
+  .card__title { font-size: 18px; font-weight: 900; line-height: 1.45; color: var(--ink); margin-bottom: 6px; border-left: 4px solid var(--red); padding-left: 10px; }
+  .card__body { font-size: 15px; }
+  .card__body p { margin: 10px 0; }
+  .card__body h3, .card__body h4, .card__body h5 { margin: 14px 0 6px; font-size: 15.5px; }
+  .card__body ul { margin: 8px 0 8px 1.2em; }
+  .card__body li { margin: 4px 0; }
+  .card__body a { color: var(--red-deep); }
+  .card__body code { background: #f3f0ef; border-radius: 5px; padding: 1px 6px; font-size: 13px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .card__body pre { background: #1e1e1e; color: #eaeaea; border-radius: 8px; padding: 12px 14px; overflow-x: auto; margin: 10px 0; }
+  .card__body pre code { background: none; color: inherit; padding: 0; }
+  .card--soon { color: var(--on-dark-soft); background: var(--bg2); border: 1px dashed var(--line-dark); text-align: center; padding: 28px 18px; }
+  .foot { color: var(--on-dark-soft); font-size: 11px; text-align: center; padding: 18px 0 4px; line-height: 1.7; }
+
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+  <!-- 鍵ゲート -->
+  <div class="gate" id="gate">
+    <div class="gate__mark">ぶんちゃんの<em>虎の巻</em></div>
+    <div class="gate__lead">アクセスキーを入力してください。</div>
+    <form class="gate__form" id="gateForm">
+      <input class="gate__input" id="gateInput" type="password" inputmode="text"
+        autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+        placeholder="tora-****-****-****" aria-label="アクセスキー" />
+      <button class="gate__btn" type="submit">ひらく</button>
+      <div class="gate__err" id="gateErr" aria-live="assertive"></div>
+    </form>
+    <div class="gate__note">※これは簡易的な鍵（クライアント側の照合）です。強い秘匿は保証しません。秘密情報・顧客名は載せない前提で運用します。</div>
+  </div>
+
+  <!-- 本体 -->
+  <div class="wrap" id="app" hidden>
+    <div class="head">
+      <div class="head__mark">ぶんちゃんの<em>虎の巻</em></div>
+      <div class="head__sub">毎日の学びを1本ずつ</div>
+    </div>
+    <div class="nav" id="nav" role="tablist"></div>
+    <div id="section"></div>
+    <div class="foot">社長専用・非公開（noindex）／完全同一オリジン・外部送信なし</div>
+  </div>
+
+<script>
+(function () {
+  'use strict';
+  // アクセスキーの SHA-256（本体はリポに置かない。ハッシュのみ）。
+  // ★簡易鍵の限界：公開リポのため、鍵を知らなくても learnings/ の .md を直接読める。
+  //   秘密情報・顧客名を載せない運用で担保する。将来 Firebase 認証へ差し替え可能な構造。
+  var KEYHASH = '36eee44e18d38397dfb6fcc3508b3695cc11c26c29a57d40a6877ebb3d73afac';
+
+  var CHAPTERS = [
+    { key: 'today', name: '今日の学び', lead: '毎日1本ずつ足していく主役。新しい学びが先頭に出ます。', main: true },
+    { key: 'intro', name: 'はじめに', lead: 'この虎の巻の使い方。', soon: true },
+    { key: 'howto', name: '作り方', lead: '手順・型。', soon: true },
+    { key: 'tmpl', name: 'テンプレ', lead: '使い回せる雛形。', soon: true },
+    { key: 'ops', name: '運用', lead: '続けるためのルール。', soon: true },
+    { key: 'case', name: '事例', lead: '実際の案件から。', soon: true },
+  ];
+
+  var gate = document.getElementById('gate');
+  var app = document.getElementById('app');
+  var form = document.getElementById('gateForm');
+  var input = document.getElementById('gateInput');
+  var err = document.getElementById('gateErr');
+  var nav = document.getElementById('nav');
+  var section = document.getElementById('section');
+
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+
+  // ---- 鍵の照合（SHA-256）----
+  async function sha256hex(s) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.textContent = '';
+    var v = (input.value || '').trim();
+    if (!v) { err.textContent = 'キーを入力してください'; return; }
+    sha256hex(v).then(function (h) {
+      if (h === KEYHASH) {
+        try { sessionStorage.setItem('tora_ok', '1'); } catch (e) {}
+        openApp();
+      } else { err.textContent = 'キーが違います'; input.select(); }
+    }).catch(function () { err.textContent = 'この端末では鍵照合に対応していません'; });
+  });
+
+  function openApp() {
+    gate.hidden = true; app.hidden = false;
+    buildNav();
+    showChapter('today');
+    window.scrollTo(0, 0);
+  }
+
+  // ---- ナビ ----
+  function buildNav() {
+    clear(nav);
+    CHAPTERS.forEach(function (c) {
+      var b = el('button', 'nav__btn', c.name);
+      b.type = 'button'; b.setAttribute('role', 'tab');
+      b.addEventListener('click', function () { showChapter(c.key); });
+      b.dataset.key = c.key;
+      nav.appendChild(b);
+    });
+  }
+  function markNav(key) {
+    Array.prototype.forEach.call(nav.children, function (b) {
+      b.setAttribute('aria-current', b.dataset.key === key ? 'true' : 'false');
+    });
+  }
+
+  function showChapter(key) {
+    markNav(key);
+    var ch = CHAPTERS.filter(function (c) { return c.key === key; })[0] || CHAPTERS[0];
+    clear(section);
+    if (ch.lead) section.appendChild(el('div', 'section__lead', ch.lead));
+    var cards = el('div', 'cards');
+    section.appendChild(cards);
+    if (ch.main) { renderToday(cards); }
+    else { cards.appendChild(el('div', 'card card--soon', '準備中 — この章はこれから増やしていきます。')); }
+    window.scrollTo(0, 0);
+  }
+
+  // ---- 今日の学び（learnings/NNN.md を順に読み込む。1ファイル追加→pushで反映）----
+  function renderToday(cards) {
+    var loading = el('div', 'card card--soon', '読み込み中…');
+    cards.appendChild(loading);
+    loadLearnings().then(function (items) {
+      clear(cards);
+      if (!items.length) { cards.appendChild(el('div', 'card card--soon', 'まだ学びがありません。learnings/001.md を追加してください。')); return; }
+      items.forEach(function (it) { cards.appendChild(buildCard(it)); });
+    }).catch(function () {
+      clear(cards);
+      cards.appendChild(el('div', 'card card--soon', '読み込みに失敗しました。'));
+    });
+  }
+
+  async function loadLearnings() {
+    var items = [], miss = 0, i = 1;
+    while (i <= 300 && miss < 3) {
+      var n = String(i).padStart(3, '0');
+      try {
+        var res = await fetch('learnings/' + n + '.md', { cache: 'no-cache' });
+        if (res.ok) { var txt = await res.text(); var p = parseFM(txt); items.push({ n: i, fm: p.fm, body: p.body }); miss = 0; }
+        else { miss++; }
+      } catch (e) { miss++; }
+      i++;
+    }
+    items.sort(function (a, b) { return b.n - a.n; }); // 新しい番号＝新着を先頭に
+    return items;
+  }
+
+  function parseFM(md) {
+    var fm = { title: '', date: '', tags: [] }, body = md;
+    var m = md.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
+    if (m) {
+      body = m[2];
+      m[1].split('\n').forEach(function (line) {
+        var kv = line.match(/^(\w+):\s*(.*)$/);
+        if (!kv) return;
+        if (kv[1] === 'tags') fm.tags = kv[2].split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+        else if (fm.hasOwnProperty(kv[1])) fm[kv[1]] = kv[2].trim();
+      });
+    }
+    return { fm: fm, body: body };
+  }
+
+  function buildCard(it) {
+    var card = el('div', 'card');
+    var meta = el('div', 'card__meta');
+    if (it.fm.date) meta.appendChild(el('span', 'card__date', it.fm.date));
+    it.fm.tags.forEach(function (t) { meta.appendChild(el('span', 'card__tag', t)); });
+    if (meta.childNodes.length) card.appendChild(meta);
+    if (it.fm.title) card.appendChild(el('div', 'card__title', it.fm.title));
+    var b = el('div', 'card__body');
+    renderMarkdown(it.body, b);
+    card.appendChild(b);
+    return card;
+  }
+
+  // ---- Markdown（安全なサブセット：見出し/段落/箇条書き/コード/太字/リンク・textContentのみ）----
+  function renderMarkdown(md, container) {
+    var blocks = md.replace(/\r/g, '').split(/\n{2,}/);
+    blocks.forEach(function (block) {
+      block = block.replace(/^\n+|\n+$/g, '');
+      if (!block) return;
+      if (/^```/.test(block)) {
+        var code = block.replace(/^```[^\n]*\n?/, '').replace(/\n?```\s*$/, '');
+        var pre = el('pre'); var c = el('code'); c.textContent = code; pre.appendChild(c); container.appendChild(pre); return;
+      }
+      var lines = block.split('\n');
+      var h = lines.length === 1 && lines[0].match(/^(#{1,4})\s+(.*)$/);
+      if (h) { var he = el('h' + Math.min(h[1].length + 2, 5)); inlineMd(h[2], he); container.appendChild(he); return; }
+      if (lines.every(function (l) { return /^[-*]\s+/.test(l); })) {
+        var ul = el('ul'); lines.forEach(function (l) { var li = el('li'); inlineMd(l.replace(/^[-*]\s+/, ''), li); ul.appendChild(li); }); container.appendChild(ul); return;
+      }
+      var p = el('p'); inlineMd(block.replace(/\n/g, ' '), p); container.appendChild(p);
+    });
+  }
+  function inlineMd(text, parent) {
+    var re = /(\*\*([^*]+)\*\*|`([^`]+)`|\[([^\]]+)\]\(([^)\s]+)\))/g;
+    var last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) parent.appendChild(document.createTextNode(text.slice(last, m.index)));
+      if (m[2] !== undefined) { parent.appendChild(el('strong', null, m[2])); }
+      else if (m[3] !== undefined) { parent.appendChild(el('code', null, m[3])); }
+      else if (m[4] !== undefined) {
+        var a = el('a', null, m[4]);
+        if (/^(https?:\/\/|\/|#)/.test(m[5])) { a.href = m[5]; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+        parent.appendChild(a);
+      }
+      last = re.lastIndex;
+    }
+    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+  }
+
+  // 起動：同一セッションで解錠済みならゲートを飛ばす
+  try { if (sessionStorage.getItem('tora_ok') === '1') { openApp(); } else { input.focus(); } }
+  catch (e) { input.focus(); }
+})();
+</script>
+</body>
+</html>
